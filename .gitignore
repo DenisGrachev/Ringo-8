@@ -357,4 +357,4 @@ _sjasmplus/
 sjasmplus.exe
 
 #exclude bat files
-*.bat
+!compile.bat
