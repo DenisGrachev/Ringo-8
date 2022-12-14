@@ -11,7 +11,7 @@ Max **128** tiles
 
 ## TileMap
 
-**Tilemap** size is **32x16** size
+Default **Tilemap** size is **32x16**
 
 ## Sprites
 
