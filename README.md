@@ -5,6 +5,20 @@
 
 Download sources, put **sjasmplus.exe** in the right sample folder and run **!compile.bat** or just compile **main.asm**
 
+## Tiles
+
+Max **128** tiles
+
+## TileMap
+
+**Tilemap** size is **32x16** size
+
+## Sprites
+
+**Eight** Sprites **11x12**
+**Sixteen** Sprites **5x5**
+
+
 ## Credits
 
 Engine Core - **Denis Grachev** (rook^retrosouls^sibkrew)
