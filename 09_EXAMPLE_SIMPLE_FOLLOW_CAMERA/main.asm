@@ -85,11 +85,10 @@ mainLoop:
 ;============================================================================	
 ;	
 
-;correction
-spriteSize = -(12+32-6)-(12+18)*256;
-	ld hl,(entityPosition) : ld de,spriteSize : add hl,de : ld (cameraTarget),hl
-
-	call doCamera;move camera to cameraTarget
+	;set entity position as camera target
+	ld hl,(entityPosition) : ld (cameraTarget),hl
+	;move camera to cameraTarget
+	call doCamera
 
 ;====================================================
 	;get current scroll values

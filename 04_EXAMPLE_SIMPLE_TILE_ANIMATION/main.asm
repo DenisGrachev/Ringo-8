@@ -97,7 +97,7 @@ doAnimations:
 
 frame: ld hl,tileFrames : ld e,(hl) : inc l : ld d,(hl) : inc l : ld (frame+1),hl	
 	;tile to change
-	ld (tilesGFX+2*2),de
+	ld (tilesLUT+2*2),de
 	ret
 
 	align 256

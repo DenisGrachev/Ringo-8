@@ -9,8 +9,18 @@ cameraTarget:     dw 0+0*256 ;x-l h-y
 
 doCamera:
     ld hl,(tileMapScroll) ; get  tilemapscroll registers
-
     ld a,(cameraTargetX) 
+
+    ;xbound
+    sub 32+6
+    jr nc,1f
+    xor a
+1:
+    cp 256-64
+    jr c,1f
+    ld a,256-64
+1:
+
     cp l
     jr z,2f;попали - выходим
     jr c,1f
@@ -20,6 +30,17 @@ doCamera:
 2:
 
     ld a,(cameraTargetY)
+
+    ;ybound
+    sub 30
+    jr nc,1f
+    xor a
+1:
+    cp 128-48
+    jr c,1f
+    ld a,128-48
+1:
+
     cp h
     jr z,2f;попали - выходим
     jr c,1f
