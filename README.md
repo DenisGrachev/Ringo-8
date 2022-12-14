@@ -1,21 +1,22 @@
 # Ringo Engine
-64x48 Gfx Lib For ZX Spectrum 128KB baseв on my render engine from [Ringo](https://zxonline.net/game/ringo)
+64x48 Gfx Lib For **ZX Spectrum 128KB** based on my render engine from [Ringo](https://zxonline.net/game/ringo)
 
-# Quick Start
+## Quick Start
 
-Download sources, put sjasmplus.exe in the right folder and run !compile.bat
+Download sources, put **sjasmplus.exe** in the right sample folder and run **!compile.bat** or just compile **main.asm**
 
-# Credits
-Engine Core - Denis Grachev (rook^retrosouls^sibkrew)
+## Credits
 
-Render Optimizations - Mikhail Vostrikov(monster^sage)
+Engine Core - **Denis Grachev** (rook^retrosouls^sibkrew)
 
-Sprites Optimizations - Aleksey Pichugin(spke^lom),Mikhail Vostrikov(monster^sage)
+Render Optimizations - **Mikhail Vostrikov** (monster^sage)
 
-Delay Routine - Jan Bobrowski
+Sprites Optimizations - **Aleksey Pichugin** (spke^lom), **Mikhail Vostrikov** (monster^sage)
 
-TapeLib by Slavo Labsky(busy)
+Delay Routine - **Jan Bobrowski**
 
-Tested with sjasmplus v1.20.1 from z00m128 https://github.com/z00m128/sjasmplus
+TapeLib by **Slavo Labsky** (busy)
+
+Tested with **sjasmplus v1.20.1** from **z00m128** https://github.com/z00m128/sjasmplus
 
 
