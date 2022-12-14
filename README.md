@@ -15,8 +15,7 @@ Default **Tilemap** size is **32x16**
 
 ## Sprites
 
-**Eight** Sprites **11x12**
-**Sixteen** Sprites **5x5**
+**Eight** Big Sprites **11x12** and **Sixteen** Small Sprites **5x5**
 
 
 ## Credits
