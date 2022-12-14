@@ -1,0 +1,1 @@
+sjasmplus.exe --nofakes --msg=war main.asm

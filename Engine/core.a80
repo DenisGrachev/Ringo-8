@@ -1,0 +1,12 @@
+;==================================================
+
+	include "macros.a80"
+	include "sys.a80"
+	include "render.a80"	
+	include "tileMapCode.a80"	
+	
+;============================;
+;SPRITES DESCRIPTORS
+spritesList:
+    include "spritesTable.a80"
+;============================;

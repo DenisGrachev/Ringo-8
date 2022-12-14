@@ -1,0 +1,200 @@
+
+
+    include "TapLib.a80"
+
+    ;99t
+    MACRO CALC_ANIMATION_AND_PATCH_ZERO_SPRITE
+    ;13
+    ld a,(sprite00+SPRITE.FRAME)
+    ;16t
+    ld hl,(sprite00+SPRITE.MAX_FRAME) ;maxframe in c anim speed at b
+    ; 4         4
+    add h : and l
+    ; 13t
+    ld (sprite00+SPRITE.FRAME),a
+    ;4                   7
+    ld l,a : ld h,high framesTable
+    ; 7           4         7         4
+    ld a,(hl) : inc l : ld h,(hl) : ld l,a
+    ;16t
+    ld (deltaFrame+1),hl
+    ENDM
+
+
+    ;ix - sprite
+    ;need preserve hl
+    ;143t+25
+    MACRO CALC_ANIMATION_AND_PATCH
+
+    ld bc,SPRITE : add ix,bc;25
+    ;4t
+    ex de,hl;
+    ld a,(ix+SPRITE.FRAME);19t get frame
+    add (ix+SPRITE.ANIM_SPEED) ;19t add speed
+    and (IX+SPRITE.MAX_FRAME);19 limit max with
+    ld (ix+SPRITE.FRAME),a ;19t save new frame value
+    ;4                   7
+    ld l,a : ld h,high framesTable
+    ; 7           4         7         4
+    ld a,(hl) : inc l : ld h,(hl) : ld l,a
+    ;16t
+    ld (deltaFrame+1),hl
+    ;4
+    ex de,hl
+    ;10t
+    ld de,attrBufferWidth-5
+    ENDM
+
+    ;put 2 dots of sprite
+    MACRO SPRITE_DOTS_FAST
+    pop bc ;10t берём маску в с и уплотненный байтик в b
+    ld a,(hl) ;7t берём байт с экрана
+    and c ;4t накладываем маску
+    or b ;4t орим
+    ld (hl), a;7t  кладем в экран    
+    ENDM
+
+
+    MACRO TOADDR2 num
+  
+    dup num
+    pop hl : ld (ADDR2),hl
+ADDR2=ADDR2+2           
+    edup
+
+    ENDM
+
+
+    MACRO TOADDR1 num
+  
+    dup num
+    pop hl : ld (ADDR1),hl
+ADDR1=ADDR1+2           
+    edup
+
+    ENDM
+
+
+    MACRO DRAW_TILE_LINES num
+  
+    dup num          
+        ld hl,ADDR ;10t        
+        pop af ; 10t papper in a
+        or (hl)         ;7t
+        ld (hl),a ;7t
+        pop hl : ld (ADDR+0),hl ;26
+        pop hl : ld (ADDR+2),hl ;26
+ADDR = ADDR + attrBufferWidth        
+    edup
+
+    ENDM
+
+    MACRO DRAW_TILE_LINES_SHIFTED num
+  
+    dup num          
+        ld hl,ADDR ;10t        
+        pop af ; 10t papper in a
+        or (hl)         ;7t
+        ld (hl),a ;7t
+        pop hl : ld (ADDR+1),hl ;26
+        pop hl : ld (ADDR+3),hl ;26
+ADDR = ADDR + attrBufferWidth        
+    edup
+
+    ENDM
+
+
+    ;ix sprite
+    ;hl - buffer start corrected
+    ;241t
+    MACRO CALC_DISPLACEMENT
+    ;START FROM Y
+    ld a,(ix+SPRITE.DRAWY)  
+    ex de,hl   
+    add a,a ;one delta is 2 bytes addr
+    ld h,high deltaBuf : ld l,a : ld a,(hl) : inc l : ld h,(hl) : ld l,a
+    add hl,de    
+    ;ADD X    
+  ;  xor a ;reset flags - can delete?
+    ld a,(ix+SPRITE.DRAWX)
+;===========================    
+;31t
+    ;CLIPPING X
+    cp 76 : jp c,1f
+	xor a;4
+    jp 2f;10
+1:
+    ccf;4
+    ld bc,0000;10
+2:
+;=========================
+    rra
+;========================================================
+;24t variant
+    jr nc,1f;12/7
+    ld c,144;7
+    jp 2f;10
+1:
+    ld c,b;4
+    nop : nop ;8
+2:
+;=============================================================
+;84t    
+    ;добавляем смещение в адресе
+    ld e,a : ld d,b : add hl,de    
+    ex hl,de
+    ;SPRITE.IMAGE 
+    ld l,(IX+SPRITE.IMAGE) : ld h,(IX+SPRITE.IMAGE+1)
+    add hl,bc
+;===================================
+deltaFrame:    ld bc,0000 : add hl,bc;21t!
+;===================================
+    ld sp,hl : ex hl,de
+    ld de,attrBufferWidth-5
+;=============================================================  
+    ENDM
+
+
+    ;ix sprite
+    MACRO CALC_DISPLACEMENT_SMALL
+    ;START FROM Y
+    ld a,(ix+SPRITE.DRAWY)  
+    ex de,hl   
+    add a,a ;one delta is 2 bytes addr
+    ld h,high deltaBuf : ld l,a : ld a,(hl) : inc l : ld h,(hl) : ld l,a
+    add hl,de    
+    ;ADD X    
+  ;  xor a ;reset flags - can delete?
+    ld a,(ix+SPRITE.DRAWX)
+;===========================    
+;31t
+    ;CLIPPING X
+    cp 76 : jp c,1f
+	xor a;4
+    jp 2f;10
+1:
+    ccf;4
+    ld bc,0000;10
+2:
+;=========================
+    rra
+;24t variant
+    jr nc,1f;12/7
+    ld c,30;7
+    jp 2f;10
+1:
+    ld c,b;4
+    nop : nop ;8
+2:
+;=============================================================
+;84t    
+    ;добавляем смещение в адресе
+    ld e,a : ld d,b : add hl,de    
+    ex hl,de
+    ;SPRITE.IMAGE 
+    ld l,(IX+SPRITE.IMAGE) : ld h,(IX+SPRITE.IMAGE+1)
+    add hl,bc : ld sp,hl : ex hl,de
+    ld de,attrBufferWidth-2
+;=============================================================  
+    ENDM
+

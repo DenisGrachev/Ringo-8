@@ -1,0 +1,518 @@
+
+
+
+attrBufferWidth=32+6 ; по 3 байта шире с каждой стороны, чтобы спарйты вылезали в бока ;)
+
+;аттрибутный буффер который будет кидаться в экран
+attrBuffer:
+;сверху 12 строк, на высоту спрайта
+        dup 12
+                block attrBufferWidth,0*8+0
+        edup
+attrBufferStart:
+        dup 24
+        block 32,0*8+0 : block 6,0*8+0
+        block 32,0*8+0 : block 6,0*8+0
+        edup
+
+;снизу 20 строк, максимальное смещение плюс высота спрайта
+        dup 20
+                block attrBufferWidth,0*8+0
+        edup 
+
+;рендер лист для тайлов	
+renderTilesList:
+N=0
+	dup 64
+		dw tileSet+48*0                
+	edup
+
+
+        ifdef PENTAGON
+
+
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+;FIRST FRAME RENDER
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+
+renderFrame1:
+;кидаем буфер на экраны
+        ld a,0 : out (254),a
+        exx
+	ld bc,#7ffd
+        ld de,00000;some delay забыл убрать но ниже уже пофиксил луч ))       
+        ld hl,(16+7)+(24+7)*256; 7 пагу подрубим на кидалку в экраны
+        out (c),l; подрубим пока 7-ю пагу и первый экран
+	exx
+
+        ld (renderTiles1Exit+1),sp
+
+ADDR1 = 16384+6144
+ADDR2 = 49152+6144
+        
+;кидаем 16 строк из аттрибутного буфера в экран
+N=0
+attrPointer=$+2
+        ld ix,attrBufferStart+8;+2+attrBufferWidth*7;+3+attrBufferWidth*4
+        ;ld ix,0
+        ld de,attrBufferWidth
+renderLine00:
+        ld sp,ix ;10t
+        TOADDR1 16
+renderLine01:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine02:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine03:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine04:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine05:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine06:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine07:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine08:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine09:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine10:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine11:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine12:
+        add ix,de : ld sp,ix    
+        TOADDR1 16
+renderLine13:
+        add ix,de : ld sp,ix       
+        TOADDR2 16
+renderLine14:
+        add ix,de : ld sp,ix      
+        TOADDR2 16
+renderLine15:
+        add ix,de : ld sp,ix      
+        TOADDR1 16
+renderLine16:
+        add ix,de : ld sp,ix      
+        TOADDR1 16
+renderLine17:
+        add ix,de : ld sp,ix     
+        TOADDR2 16
+renderLine18:
+        add ix,de : ld sp,ix      
+        TOADDR2 16
+renderLine19:
+        add ix,de : ld sp,ix      
+        TOADDR1 16
+renderLine20:
+        add ix,de : ld sp,ix     
+        TOADDR1 16
+renderLine21:
+        add ix,de : ld sp,ix     
+        TOADDR2 16
+renderLine22:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine23:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine24:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine25:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine26:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine27:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine28:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine29:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine30:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine31:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine32:
+        add ix,de : ld sp,ix
+        TOADDR1 16        
+renderLine33:
+        add ix,de : ld sp,ix
+        TOADDR2 16        
+renderLine34:
+        add ix,de : ld sp,ix
+        TOADDR2 16        
+renderLine35:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine36:
+        add ix,de : ld sp,ix
+        TOADDR1 16        
+renderLine37:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+
+        ld a,0 : out (254),a      
+
+        exx : out (c),l : exx   ;20
+        nop ;4
+renderLine38:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR2 16        ;416
+renderLine39:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR1 16        ;416
+renderLine40:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR1 16        ;416
+renderLine41:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR2 16        ;416                        
+
+
+        exx : out (c),h : exx   ;20
+        nop ;4
+renderLine42:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR2 16        ;416
+renderLine43:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR1 16        ;416
+renderLine44:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR1 16        ;416
+renderLine45:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR2 16        ;416                                
+
+
+        exx : out (c),l : exx   ;20
+        nop ;4
+renderLine46:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR2 16        ;416
+renderLine47:
+        add ix,de : ld sp,ix ;15 + 10
+        TOADDR1 16        ;416            
+
+        ;EXTRA DELAY
+        ld sp,(renderTiles1Exit+1) : ld bc,228*3+80+40 : call DELAY        
+        ld (renderTiles1Exit+1),sp
+
+;рисуем тайлы в буфер
+
+        ;here is some place for init
+        ;dup 2 : ld (0),bc : edup      
+renderTilesPage:        ld de,(16+TILES_PAGE2)*256+(24+TILES_PAGE2) ;пагу с соответсвующими тайлами     
+        ld bc,#7ffd        
+        ;===============================
+        ;exx : out (c),h : exx  
+        ;==============================
+        nop : out (c),e
+        ;ld a,3 : out (254),a
+        jp renderTiles
+
+renderTiles1Exit:
+        ld sp,00000
+
+        ld bc,224*3-10 : call DELAY        
+
+        exx : out (c),h : exx
+        ld bc,224*8-10-20 : call DELAY        
+
+        exx : out (c),l : exx
+       ; ld bc,224*8-10-20-8-10 : call DELAY
+
+        ret
+
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+;SECOND FRAME RENDER
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+
+renderFrame2:
+
+        exx
+	ld bc,#7ffd
+        ;пагу с соответсвующими тайлами
+        ld de,(renderTilesPage+1)
+        ld hl,16+24*256
+        out (c),e; 
+	exx
+
+        ;saveStack
+        ld (renderTiles2Exit+1),sp
+        jp renderTiles2
+
+renderTiles2Exit:
+        ld sp,00000
+        display $
+        call processTileMap        
+        exx : out (c),l : exx                
+        if SPRITE_MODE > 0
+        ld bc,224*17-128-18+32+16+32-112 : call DELAY ;        
+        else
+        ld bc,224*17-128-18+32+29+10-112 : call DELAY ;        
+        endif
+        jp doSprites
+
+
+        else
+
+
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+;FIRST FRAME RENDER
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+
+renderFrame1:
+;кидаем буфер на экраны
+        ld a,0 : out (254),a
+        exx
+	ld bc,#7ffd
+        ld de,00000;some delay забыл убрать но ниже уже пофиксил луч ))       
+        ld hl,(16+7)+(24+7)*256; 7 пагу подрубим на кидалку в экраны
+        out (c),l; подрубим пока 7-ю пагу и первый экран
+	exx
+
+        ld (renderTiles1Exit+1),sp
+
+ADDR1 = 16384+6144
+ADDR2 = 49152+6144
+        
+;кидаем 16 строк из аттрибутного буфера в экран
+N=0
+attrPointer=$+2
+        ld ix,attrBufferStart+8;+2+attrBufferWidth*7;+3+attrBufferWidth*4
+        ;ld ix,0
+        ld de,attrBufferWidth
+renderLine00:
+        ld sp,ix ;10t
+        TOADDR1 16
+renderLine01:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine02:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine03:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine04:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine05:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine06:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine07:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine08:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine09:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine10:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine11:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine12:
+        add ix,de : ld sp,ix    
+        TOADDR1 16
+renderLine13:
+        add ix,de : ld sp,ix       
+        TOADDR2 16
+renderLine14:
+        add ix,de : ld sp,ix      
+        TOADDR2 16
+renderLine15:
+        add ix,de : ld sp,ix      
+        TOADDR1 16
+renderLine16:
+        add ix,de : ld sp,ix      
+        TOADDR1 16
+renderLine17:
+        add ix,de : ld sp,ix     
+        TOADDR2 16
+renderLine18:
+        add ix,de : ld sp,ix      
+        TOADDR2 16
+renderLine19:
+        add ix,de : ld sp,ix      
+        TOADDR1 16
+renderLine20:
+        add ix,de : ld sp,ix     
+        TOADDR1 16
+renderLine21:
+        add ix,de : ld sp,ix     
+        TOADDR2 16
+renderLine22:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine23:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine24:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine25:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine26:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine27:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine28:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+renderLine29:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine30:
+        add ix,de : ld sp,ix
+        TOADDR2 16
+renderLine31:
+        add ix,de : ld sp,ix
+        TOADDR1 16
+
+       ; dup 16 : nop : edup
+       ; ld a,3 : out (254),a        
+       ;TWEEK SOME BEAM ON TOP OF PIXEL AREA
+        ;for +3 variations?
+        nop ;: nop : nop : nop
+
+        add ix,de : ld sp,ix                
+renderLine32:                
+        TOADDR1 16        
+        add ix,de : ld sp,ix   
+renderLine33:                
+        TOADDR2 10
+        ;display $        
+        exx : out (c),h : exx
+        
+        TOADDR2 6
+        add ix,de : ld sp,ix 
+renderLine34:                
+        TOADDR2 16          
+        add ix,de : ld sp,ix 
+renderLine35:                
+        TOADDR1 16          
+        add ix,de : ld sp,ix         
+renderLine36:                
+        TOADDR1 16          
+        add ix,de : ld sp,ix
+renderLine37:                
+        TOADDR2 3            
+        pop hl                
+       ; display $        
+        exx : out (c),l : exx   
+        ld (ADDR2),hl
+ADDR2=ADDR2+2
+        TOADDR2 12       
+        add ix,de : ld sp,ix
+renderLine38:         
+        TOADDR2 16       
+        add ix,de : ld sp,ix           
+renderLine39:         
+        TOADDR1 16       
+        add ix,de : ld sp,ix           
+renderLine40:         
+        TOADDR1 13    
+         ;display $            
+        exx : out (c),h : exx           
+        TOADDR1 3        
+        add ix,de : ld sp,ix    
+renderLine41:                
+        TOADDR2 16        
+        add ix,de : ld sp,ix           
+renderLine42:         
+        TOADDR2 16        
+        add ix,de : ld sp,ix           
+renderLine43:         
+        TOADDR1 16        
+        add ix,de : ld sp,ix    
+renderLine44:         
+        TOADDR1 8
+      ;  display $
+        exx : out (c),l : exx  
+        TOADDR1 8
+        add ix,de : ld sp,ix    
+renderLine45:           
+        TOADDR2 16
+        add ix,de : ld sp,ix    
+renderLine46:           
+        TOADDR2 16
+        add ix,de : ld sp,ix            
+renderLine47:           
+        TOADDR1 16        
+
+;рисуем тайлы в буфер
+
+
+        ;here is some place for init
+        dup 2 : ld (0),bc : edup      
+renderTilesPage:        ld de,(16+TILES_PAGE2)*256+(24+TILES_PAGE2) ;пагу с соответсвующими тайлами     
+        ld bc,#7ffd        
+        ;===============================
+        ;exx : out (c),h : exx  
+        ;==============================
+        nop : out (c),e
+        ;ld a,3 : out (254),a
+        jp renderTiles
+
+renderTiles1Exit:
+        ld sp,00000
+
+        ret
+
+
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+;SECOND FRAME RENDER
+;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
+
+renderFrame2:
+        exx
+	ld bc,#7ffd
+        ;пагу с соответсвующими тайлами
+        ld de,(renderTilesPage+1)
+        ld hl,16+24*256
+        out (c),e; 
+	exx
+
+        ;saveStack
+        ld (renderTiles2Exit+1),sp
+        jp renderTiles2
+
+renderTiles2Exit:
+        ld sp,00000
+        display $
+        call processTileMap        
+        exx : out (c),l : exx        
+        jp doSprites
+
+        endif

@@ -1,0 +1,31 @@
+;
+;Simple Camera
+;
+
+;where to move camera view, topLeft coords
+cameraTargetX EQU $
+cameraTargetY EQU $+1
+cameraTarget:     dw 0+0*256 ;x-l h-y
+
+doCamera:
+    ld hl,(tileMapScroll) ; get  tilemapscroll registers
+
+    ld a,(cameraTargetX) 
+    cp l
+    jr z,2f;попали - выходим
+    jr c,1f
+    inc l : ld a,l : ld (tileMapScroll_H),a : jr 2f
+1:
+    dec l : ld a,l : ld (tileMapScroll_H),a
+2:
+
+    ld a,(cameraTargetY)
+    cp h
+    jr z,2f;попали - выходим
+    jr c,1f
+    inc h : ld a,h : ld (tileMapScroll_V),a : jr 2f
+1:
+    dec h : ld a,h : ld (tileMapScroll_V),a
+2:
+
+    ret

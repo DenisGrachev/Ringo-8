@@ -1,0 +1,141 @@
+
+;NOW SMALL SPRITES TIME
+    display $
+reSmallSprites:    
+
+attrBufferCorrection2:    ld hl,00000    
+;calculate displacement from coords
+    CALC_DISPLACEMENT_SMALL
+;================================================
+    ;584
+    dup 5
+
+    dup 2
+    SPRITE_DOTS_FAST ;32t
+    inc hl;6    
+    edup
+    ;+43
+    SPRITE_DOTS_FAST;32t
+    add hl,de;11
+    edup
+    org $-1
+
+    ; 10t            15t
+    ld bc,SPRITE : add ix,bc ; and b=0 is good
+
+    ld hl,(attrBufferCorrection2+1)
+;calculate displacement from coords
+    CALC_DISPLACEMENT_SMALL
+;876t
+
+    dup 2
+    SPRITE_DOTS_FAST ;32t
+    inc hl;6    
+    edup
+    ;+43
+    SPRITE_DOTS_FAST;32t
+    add hl,de;11    
+    ld a,r;9t delay
+
+;1004!!!!!!!!!!!!!!!!
+
+    exx : out (c),h : exx
+
+    dup 4
+    dup 2
+    SPRITE_DOTS_FAST ;32t
+    inc hl;6    
+    edup
+    ;+43
+    SPRITE_DOTS_FAST;32t
+    add hl,de;11
+    edup
+    org $-1
+    
+    ; 10t            15t
+    ld bc,SPRITE : add ix,bc ; and b=0 is good    
+;==============================================================
+;DELAY 78
+    ifdef PENTAGON
+        if SPRITE_MODE<2
+    dup 1 : ld (0),bc : edup
+	endif
+    nop : nop
+    else
+    dup 3 : ld (0),bc : edup
+    endif
+    nop : nop
+;==============================================================
+;calculate displacement from coords
+    ;257 not 251 need 6 t remove up
+    ld hl,(attrBufferCorrection2+1)
+    CALC_DISPLACEMENT_SMALL
+
+
+    dup 5
+    dup 2
+    SPRITE_DOTS_FAST ;32t
+    inc hl;6    
+    edup
+    ;+43
+    SPRITE_DOTS_FAST;32t
+    add hl,de;11
+    edup
+    org $-1
+    ; 10t            15t
+    ld bc,SPRITE : add ix,bc ; and b=0 is good  
+
+    ld hl,(attrBufferCorrection2+1)
+;calculate displacement from coords
+    CALC_DISPLACEMENT_SMALL
+
+
+    dup 2
+    SPRITE_DOTS_FAST ;32t
+    inc hl;6    
+    edup
+    ;+43
+    SPRITE_DOTS_FAST;32t
+    add hl,de;11
+
+
+    ld a,r;9t delay
+
+
+
+;1004!!!!!!!!!!!!!!!!
+
+    exx : out (c),l : exx
+
+    dup 4
+    dup 2
+    SPRITE_DOTS_FAST ;32t
+    inc hl;6    
+    edup
+    ;+43
+    SPRITE_DOTS_FAST;32t
+    add hl,de;11
+    edup
+    org $-1
+    ; 10t            15t
+    ld bc,SPRITE : add ix,bc ; and b=0 is good  
+;=================================
+;DELAY 54
+    ifdef PENTAGON
+        if SPRITE_MODE<2
+            nop : nop
+        endif
+    else
+    ld (0),bc 
+     if SPRITE_MODE<2
+        ld (0),bc
+        endif
+     
+    endif
+
+        if SPRITE_MODE=2
+    ld a,0
+	endif
+;=================================    
+    ; 8           10
+    dec iyl : jp nz,reSmallSprites

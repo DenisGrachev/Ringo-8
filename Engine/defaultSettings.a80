@@ -1,0 +1,16 @@
+
+;SET SPRITES MODE - compile time ONLY
+;==================================================
+;MODE 0 - all small sprites ABOVE big sprites
+;MODE 1 - all small sprites BELOW big sprites
+;MODE 2 - 8 small sprites BELOW big sprites and 8 small sprites ABOVE big sprites
+
+;default mode 2
+SPRITE_MODE = 2
+
+;TileMap SIZE
+;======================================================================
+tileMapWidth = 32	    ;MAX 256
+tileMapHeight = 16      ;MAX 128
+;======================================================================
+

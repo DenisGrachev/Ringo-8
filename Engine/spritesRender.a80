@@ -1,0 +1,95 @@
+;======================================================
+;SPRITES MODULE
+;======================================================
+;SPRITES LAYER
+;X: 0-11 is hidden 12-75 shown 75.. hidden
+;Y; 0-11 is hidden 12-49 shown 50-62 hidden
+;============================;
+
+
+
+    align 256
+;table for sprites animations
+framesTable:
+N=0:
+    dup 16
+    dup 8 : dw N*288 : edup
+N=N+1    
+    edup
+
+
+doSprites:    
+
+
+    ;112t
+    ;DELAY
+    ;dup 5 : ld (0),bc : edup
+	;nop : nop : nop
+
+    CALC_ANIMATION_AND_PATCH_ZERO_SPRITE
+
+    ld a,0 : inc bc
+    
+    ;save stack
+    ld (spritesSP+1),sp
+    ;prepare pages - no need already prepared from top border
+    ;exx : ld bc,#7ffd : ld hl,24+16*256 : exx
+    ;need to start with  exx : out (c),h : exx
+    
+    ;prepare correction
+    ld hl,(attrPointer)
+    ;add hide correction
+    ld de,-6-attrBufferWidth*12 : add hl,de : ld (attrBufferCorrection+1),hl : ld (attrBufferCorrection2+1),hl
+    ;prepare
+    ld b,0;reset b
+
+    ;pointer to sprites list
+    if SPRITE_MODE > 0
+        if SPRITE_MODE = 1
+        ld ix,spritesList+8*SPRITE
+        ld iyl,4
+        include "spritesRenderSMALL.a80"
+        ld ix,spritesList+0*SPRITE
+        include "spritesRenderBIG.a80"
+        else
+        ld ix,spritesList+8*SPRITE
+reRender:        
+        ld iyl,2
+        include "spritesRenderSMALL.a80"
+patchJP:            jp continueJP
+continueJP:        ld ix,spritesList+0*SPRITE
+        include "spritesRenderBIG.a80"
+        ld ix,spritesList+16*SPRITE
+        ld hl,spritesSP : ld (patchJP+1),hl
+        jp reRender
+        ;include "spritesRenderSMALL.a80"
+        ;jp reSmallSprites
+
+        endif
+    else
+        ld ix,spritesList+0*SPRITE
+        include "spritesRenderBIG.a80"
+        ld ix,spritesList+8*SPRITE
+        ld iyl,4
+        include "spritesRenderSMALL.a80"
+    endif
+
+;restoreStack
+spritesSP:   ld sp,00000
+
+    if SPRITE_MODE=2
+    ld hl,continueJP : ld (patchJP+1),hl
+    endif
+
+
+    ;patch small sprites here
+N=0
+    dup 16
+ADDR = smallSpritesList+N*SPRITE
+	ld hl,(ADDR+2) : ld (ADDR+4),hl
+N=N+1
+    edup
+
+;   ld a,1 : out (254),a
+                             
+    ret

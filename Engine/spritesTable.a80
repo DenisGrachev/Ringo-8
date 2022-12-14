@@ -1,0 +1,390 @@
+
+;SPRITES DESCRIPTORS
+;
+ANIM_SPEED_0 = 0
+ANIM_SPEED_1 = 2
+ANIM_SPEED_2 = 4
+ANIM_SPEED_3 = 8
+ANIM_SPEED_4 = 16 ;every frame change sprite frame - MAX SPEED
+
+;maxframe*16-1
+ANIM_FRAMES_8 = 8*16-1
+ANIM_FRAMES_4 = 4*16-1
+ANIM_FRAMES_2 = 2*16-1
+
+    STRUCT SPRITE
+IMAGE           WORD 00000
+X               BYTE 0
+Y               BYTE 0
+DRAWX               BYTE 0
+DRAWY               BYTE 0
+FRAME           BYTE
+MAX_FRAME       BYTE ;4,8,16,32,64
+ANIM_SPEED      BYTE
+    ENDS
+
+;BIG SPRITES
+sprite00:
+    dw 00000
+sprite00_X:    
+    db 0
+sprite00_Y:        
+    db 0
+;drawXY
+    db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0
+
+sprite01:
+    dw 00000
+sprite01_X:    
+    db 0
+sprite01_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0
+
+sprite02:
+    dw 00000
+sprite02_X:    
+    db 0
+sprite02_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0
+
+sprite03:
+    dw 00000
+sprite03_X:    
+    db 0
+sprite03_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0 
+
+sprite04:
+    dw 00000
+sprite04_X:    
+    db 0
+sprite04_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0    
+
+sprite05:
+    dw 00000
+sprite05_X:    
+    db 0
+sprite05_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0    
+
+sprite06:
+    dw 00000
+sprite06_X:    
+    db 0
+sprite06_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0    
+
+sprite07:
+    dw 00000
+sprite07_X:    
+    db 0
+sprite07_Y:        
+    db 0   
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0    
+
+;===================================================
+;SMALL SPRITES x8
+smallSpritesList:
+sprite08:
+    dw 00000
+sprite08_X:    
+    db 0
+sprite08_Y:        
+    db 0
+;drawXY
+    db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite09:
+    dw 00000
+sprite09_X:    
+    db 0
+sprite09_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite10:
+    dw 00000
+sprite10_X:    
+    db 0
+sprite10_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite11:
+    dw 00000
+sprite11_X:    
+    db 0
+sprite11_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite12:
+    dw 00000
+sprite12_X:    
+    db 0
+sprite12_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite13:
+    dw 00000
+sprite13_X:    
+    db 0
+sprite13_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite14:
+    dw 00000
+sprite14_X:    
+    db 0
+sprite14_Y:        
+    db 0      
+;drawXY
+	db 0,0  
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite15:
+    dw 00000
+sprite15_X:    
+    db 0
+sprite15_Y:        
+    db 0     
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+;===================================================
+;SMALL SPRITES x8
+sprite16:
+    dw 00000
+sprite16_X:    
+    db 0
+sprite16_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite17:
+    dw 00000
+sprite17_X:    
+    db 0
+sprite17_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite18:
+    dw 00000
+sprite18_X:    
+    db 0
+sprite18_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite19:
+    dw 00000
+sprite19_X:    
+    db 0
+sprite19_Y:        
+    db 0 
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite20:
+    dw 00000
+sprite20_X:    
+    db 0
+sprite20_Y:        
+    db 0 
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite21:
+    dw 00000
+sprite21_X:    
+    db 0
+sprite21_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite22:
+    dw 00000
+sprite22_X:    
+    db 0
+sprite22_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0       
+
+sprite23:
+    dw 00000
+sprite23_X:    
+    db 0
+sprite23_Y:        
+    db 0
+;drawXY
+	db 0,0
+;sprite FRAME
+    db 0
+;sprite max frame
+    db ANIM_FRAMES_4
+;sprite anim speed
+    db ANIM_SPEED_0

@@ -1,0 +1,111 @@
+
+_renderTiles:
+;TOTAL 708T PER TILE
+;8LINES - 688T   
+;ONE LINE - 86t
+TILE = 0
+    dup 9
+;884 pattern
+;=======================================================
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+;=======================================================
+TILE = TILE + 1
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+;=======================================================
+TILE = TILE + 1
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 4 
+;=======================================================
+        ifndef PENTAGON        
+;32t delay
+        ld (0),bc : nop : nop : nop
+        endif
+;=======================================================
+        out (c),d
+;488 pattern
+;=======================================================
+        DRAW_TILE_LINES_SHIFTED 4 
+        ld (0),bc
+;=======================================================        
+TILE = TILE + 1
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+;=======================================================
+TILE = TILE + 1
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+;=======================================================
+        ifndef PENTAGON        
+;32t delay
+        ld (0),bc : nop : nop : nop
+        endif
+;=======================================================
+        out (c),e        
+TILE = TILE + 1
+    edup
+;=======================================================
+;884 pattern
+;=======================================================
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+;=======================================================
+TILE = TILE + 1
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+;=======================================================
+TILE = TILE + 1
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 4 
+;=======================================================
+        ifndef PENTAGON        
+;32t delay
+        ld (0),bc : nop : nop : nop
+        endif
+;=======================================================
+        out (c),d
+;488 pattern
+;=======================================================
+        DRAW_TILE_LINES_SHIFTED 4         
+;=======================================================        
+TILE = TILE + 1
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+;=======================================================
+TILE = TILE + 1
+;ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+      ;  ld sp,(renderTilesList+TILE*2);20t
+      ;  DRAW_TILE_LINES_SHIFTED 2 
+;TILE = TILE + 1
+;=======================================================
+    ;ld a,3 : out (254),a
+    jp renderTiles1Exit
+;draw last FULL tiles line
+_renderTiles2:        
+        ld a,0 : out (254),a
+        dup 5
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 8
+TILE = TILE + 1
+        edup
+;=======================================================
+;draw bottom tiles line (only 7 lines not 8 needs)
+        dup 9
+ADDR = attrBufferStart + 8 + (TILE%9)*4 + 8 * attrBufferWidth*(TILE/9)        
+        ld sp,(renderTilesList+TILE*2);20t
+        DRAW_TILE_LINES_SHIFTED 7
+TILE = TILE + 1
+        edup
+        jp renderTiles2Exit
+

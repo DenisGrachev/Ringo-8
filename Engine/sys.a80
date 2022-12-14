@@ -1,0 +1,194 @@
+
+
+//interrupt code
+
+;================interrupt enable===================
+IMON:       
+       ld a,195
+       
+       ld (#bfbf),a
+       ld (#bfbf+1),hl
+
+       ld hl,#be00
+       ld a,h
+       ld de,#be01
+       ld bc,256
+       ld (hl),#bf
+
+       ldir
+
+       LD    I,A
+       IM 2
+       ei
+       ret
+
+nullProc:
+	ret
+
+mainInterrupt:
+        di
+; preserve all registers
+        push    af
+        push    bc
+        push    de
+        push    hl
+        ex      af, af'
+        exx
+        push    af
+        push    bc
+        push    de
+        push    hl
+        push    ix
+        push    iy
+;========================================  
+        
+intProc:	call nullProc
+
+;restore current page for user
+        ld a,(currentPage) : call swapPage
+
+;========================================
+;restore all registers
+        pop     iy
+        pop     ix
+
+        pop     hl
+        pop     de
+        pop     bc
+        pop     af
+        exx
+        ex      af, af'
+        pop     hl
+        pop     de
+        pop     bc
+        pop     af
+
+        ei
+        ret
+
+enableRender:
+    ld hl,renderFrame1 : ld (intProc+1),hl	
+    ret
+
+disableRender:
+    ld hl,nullProc : ld (intProc+1),hl	
+    ret    
+
+
+; Z80 delay routine
+; by Jan Bobrowski, license GPL, LGPL
+DELAY:  ; wait bc T (including call; bc>=141)
+	; destroys: af, bc, hl
+	ld hl, -141
+	add hl, bc
+	ld bc, -23
+_loop	add hl, bc
+	jr c, _loop
+	ld a, l
+	add a, 15
+	jr nc, _g0
+	cp 8
+	jr c, _g1
+	or 0
+_g0	inc hl
+_g1	rra
+	jr c, _b0
+	nop
+_b0	rra
+	jr nc, _b1
+	or 0
+_b1	rra
+	ret nc
+    ret
+
+initHardware:
+    ;UGLY DETECT BY ROM BYTE
+    ;On 128k models, PEEK 2899 is 159 on a 128 or +2, 126 on a +3 or +2a.
+    ld a,(2899)
+    cp 159
+    ret z;ok 128k and grey +2; 4,6 fast	           
+    ;OK PATCH SOME PARAMS FOR +3,+2black
+    ld hl,(16+TILES_PAGE2_3)*256+(24+TILES_PAGE2_3)
+
+    ld (renderTilesPage+1),hl
+    ld (patchScroll01+1),hl
+
+    ld hl,(16+TILES_PAGE1_3)*256+(24+TILES_PAGE1_3)
+    ld (patchScroll02+1),hl
+
+    ld a,16+TILES_PAGE1_3 : ld (tilesPage1_16),a
+    ld a,16+TILES_PAGE2_3 : ld (tilesPage2_16),a
+
+    ;patch pageTable
+    ld hl,pageTable+8 : ld de,pageTable : ld bc,8 : ldir
+    ret
+
+tilesPage1_16:  db 16+TILES_PAGE1
+tilesPage2_16:  db 16+TILES_PAGE2
+
+;THIS IS VIRTUAL PAGES :)
+;BASE
+    align 256
+pageTable:    
+    db 16+0,16+1,16+2,16+3,16+4,16+5,16+6,16+7    
+;+3    
+    db 16+0,16+4,16+2,16+6,16+1,16+5,16+3,16+7    
+
+currentPage:    db 0
+
+swapPage:
+    ld (currentPage),a;save new page
+    ld  c,a : ld b,high pageTable : ld a,(bc)
+    ld bc,#7ffd : out (c),a
+    ret
+
+fillScreens:    
+    ld a,16+7: ld bc,$7ffd : out (c),a
+    xor a 
+    ld hl,22528 : ld de,22529 : ld bc,768-1 : ld (hl),a : ldir
+    ld hl,55296 : ld de,55297 : ld bc,768-1 : ld (hl),a : ldir
+    ld a,16+0 : ld bc,$7ffd : out (c),a
+    ret
+;quick and dirty pattern fill
+fillPixels:
+    ld a,11110000b
+    ld hl,16384 : ld de,16385 : ld bc,6144-1 : ld (hl),a : ldir
+    ld a,16+7: ld bc,$7ffd : out (c),a
+    ld a,11110000b
+    ld hl,49152 : ld de,49153 : ld bc,6144-1 : ld (hl),a : ldir
+    ld a,16+0 : ld bc,$7ffd : out (c),a
+    ret
+
+initTiles:
+    call generateShifted ; generate shifted tiles
+    call fillPixels 	 ; fill pixel pattern
+    ret
+
+//generate shifted tiles to 16384 (6144 exactly)
+//and then copy to tiles 1 page from 16384
+generateShifted:    
+    ld a,(tilesPage2_16): ld bc,$7ffd : out (c),a
+    ld hl,tileSet : ld de,16384    
+    ld ixh,4
+2:    
+    ld ixl,0        
+1:     
+    ;skip first byte
+    inc hl : inc de
+    ;shift 5 furter
+    ld b,5
+3:    
+    ld a,(hl)    
+    and 00111000b : rra : rra : rra : add 64 : ld c,a
+    inc hl
+    ld a,(hl) : and 00000111b : rla : rla : rla : or c
+    ld (de),a
+    inc de
+    djnz 3b
+    dec ixl : jp nz,1b
+    dec ixh : jp nz,2b
+    ld a,(tilesPage1_16): ld bc,$7ffd : out (c),a
+    ld hl,16384 : ld de,tileSet : ld bc,6144 : ldir
+    ld a,16+0 : ld bc,$7ffd : out (c),a
+    ret
+

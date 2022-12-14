@@ -1,0 +1,210 @@
+
+;===== SCROLL VALUES ======================
+tileMapScroll_H EQU $
+tileMapScroll_V EQU $+1
+tileMapScroll:     dw 0+0*256 ;x-l h-y
+;==========================================
+
+;for vertical tilemap deltaz and particles
+    align 256
+deltaBuf:                
+N=0
+        dup 59
+        dw attrBufferWidth*N
+N=N+1        
+        edup        
+        dup 128-59
+        dw -attrBuffer
+        edup
+
+;table with tilemap lines for y displacement
+	align 256
+tileMapLines:
+N=0
+        dup 128
+        dw tileMapWidth*N
+N=N+1        
+        edup
+
+;=========================================================================
+;FIXED TIME FOR TOP BORDER
+;PATCH BUFFER FOR CURRENT SCROLL POSITION
+calculateScroll:
+;global map delta
+;=======================================================================
+;YYYYY
+    ld de,tileMap
+    ld a,(tileMapScroll_V) 
+    srl a : srl a : srl a    
+    add a,a
+    ld h,high tileMapLines: ld l,a : ld a,(hl) : inc l : ld h,(hl) : ld l,a
+;==================================================================
+
+    add hl,de
+;XXXXX
+    ld a,(tileMapScroll_H) : srl a : srl a : srl a    
+    ld d,0 : ld e,a
+    add hl,de
+    ld (tileMapPointer+1),hl
+;========================================================================
+attrPointerNew: ld hl,attrBufferStart+8 : ld (attrPointer),hl
+;====================================
+    ld de,attrBufferStart+8
+;DO =Y=
+    ;add yl by bufferWidth
+    ld a,(tileMapScroll_V) : and 7  : add a,a ;one delta is 2 bytes addr
+    ld h,high deltaBuf : ld l,a : ld a,(hl) : inc l : ld h,(hl) : ld l,a
+    add hl,de    
+    
+
+;local deltaX 0-7    
+;get odd page
+patchScroll01:    ld de,(16+TILES_PAGE2)*256+(24+TILES_PAGE2);ordinary page
+    ;ld de,(vMapPage2_24)    
+    xor a
+    ld a,(tileMapScroll_H) 
+    and 7
+    rra    
+    jr nc,1f;12/7  
+    inc a  ;!!!!!!!!!!!!!!! need new fix
+patchScroll02:    ld de,(16+TILES_PAGE1)*256+(24+TILES_PAGE1) ;10t        
+    jp 2f;10t
+1:
+    nop;!!!!!!!!!!
+    ;15t delay
+    ret c
+    ret c
+    ret c
+2:
+    ;27t
+    ld (renderTilesPage+1),de
+
+    ld d,0 : ld e,a
+    add hl,de
+
+    ld (attrPointerNew+1),hl
+
+    ret
+
+;=========================================================================
+;выкусываем окно из большой тайлмапы и отправляем в рендер лист тайлики 
+processTileMap:
+        call calculateScroll:;467t
+        ld (ptmSP+1),sp          
+;new patcher
+
+        ld sp,renderTilesList+63*2;point to last tile
+
+tileMapPointer:    ld hl,tileMap;10t
+        ;starts from end of viewport (8x6 tiles)
+        ld de,tileMapWidth*6+8 : add hl,de : ex de,hl
+
+
+        dup 7
+;=========================================================================
+        dup 9
+        ;7t             4       7                   7          4       7                   
+        ;ld a,(de) : ld l,a : ld h,high tilesGFX : ld c,(hl) : inc l : ld b,(hl)
+        ;ADD a,a can be romoved to speed up, but tilenum is X2 and same limit for 128tiles
+        ;   7           4       4              7               7         4         7
+        ld a,(de) : add a,a : ld l,a : ld h,high tilesGFX : ld c,(hl) : inc l : ld b,(hl)
+
+        ;11t
+        push bc
+        ;6
+        dec de
+        edup
+        org $-1        
+;==========================================================================
+        ;    10                     11          4
+        ld hl,-tileMapWidth+8 : add hl,de : ex de,hl        
+        edup
+        org $-5
+  
+ptmSP:  ld sp,00000
+
+        
+;how break 128 tiles limit
+
+/*
+        exx
+        ld bc,tilesGFX
+        exx
+
+
+        ;85t        
+        dup 9
+
+        ld a,(hl) ;7
+        exx   ;4      
+        ld l,a : ld h,0  ;4 7
+        add hl,hl ;11
+        add hl,bc ;11
+        ; 7             6         7         11
+        ld e,(hl) : inc hl : ld d,(hl) : push de
+        ;4
+        exx
+        ;6
+        dec hl
+*/
+
+
+
+        /*87t
+         ld bc,tilesGFX
+        dup 9
+        ld e,(hl) : ld d,0 ;7 7 get tile
+        ex de,hl ;4 save map pointer
+        add hl,hl; 11 x2
+        add hl,bc; 11 add tiles gfx
+        ;   7            6         7         4       11
+        ld a,(hl) : inc hl : ld h,(hl) : ld l,a : push hl ; load and save
+        ;4
+        ex de,hl ;restore hl
+        ;6
+        dec hl ;next tile
+        edup
+
+        ld de,-tileMapWidth+8 : add hl,de;next line
+        */
+
+/*
+        ld bc,tilesGFX
+        dup 9
+        ld e,(hl) : ld d,0 ;7 7 get tile
+        ex de,hl ;4 save map pointer
+        add hl,hl; 11 x2
+        add hl,bc; 11 add tiles gfx
+        ;   7            6         7         4       11
+        ld a,(hl) : inc hl : ld h,(hl) : ld l,a : push hl ; load and save
+        ;4
+        ex de,hl ;restore hl
+        ;6
+        dec hl ;next tile
+        edup
+
+        ld de,-tileMapWidth+8 : add hl,de;next line
+*/
+
+    ret
+
+;applyScroll:
+;        di
+;;        ld hl,(tileMapScroll) : ld (tileMapScroll_internal),hl
+;	call processTileMap
+;        ei
+;        ret
+
+;адреса графики тайлов, по сути таблица соответствия
+        align 256
+tilesGFX:
+N=0
+        dup 128
+        dw tileSet+N*48
+N=N+1        
+        edup
+
+
+        include "_tileMap.a80"
+
+
