@@ -58,8 +58,7 @@ start:
 	include "../engine/core.a80"
 ;============================================================================
 ;include simple camera
-	;include "../engine/simpleCamera.a80"
-	include "simpleCamera.a80"
+	include "include/simpleCamera.a80"
 
 ;
 entityPosition:

@@ -348,3 +348,13 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Exclude sjasm and vscode folders
+.vscode/
+_sjasmplus/
+
+#exclude sjasmplus exe
+sjasmplus.exe
+
+#exclude bat files
+*.bat
