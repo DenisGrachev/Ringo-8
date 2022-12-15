@@ -1,65 +1,49 @@
-    ld iyl,8 ;11
+    ld iyl,8
     display $
 reSprite:
 ;=====================================
-;251t
 attrBufferCorrection:    ld hl,00000
     ;calculate displacement from coords
-    ;241t
     CALC_DISPLACEMENT
 ;=======================================================
-;124t
-    ;exx : out (c),h : exx  
-;1517t
-    ;ld iyh,4 ;11
-    ld iyh,4 ;11
-    ;251*6=1506
+    ld iyh,4
 reLine01:
-    ;190
     dup 5   
-    SPRITE_DOTS_FAST ;32t
-    inc hl;6    
+    SPRITE_DOTS_FAST
+    inc hl    
     edup
 
-    ;+43
-    SPRITE_DOTS_FAST;32t
-    add hl,de;11
-    ; 8            10
+    SPRITE_DOTS_FAST
+    add hl,de
     dec iyh : jp nz,reLine01   
 
     exx : out (c),h : exx  
 
-;190
-    dup 5   
-    SPRITE_DOTS_FAST ;32t
-    inc hl;6    
-    edup
-
-    ;+43
-    SPRITE_DOTS_FAST;32t
-    add hl,de;11
 
     dup 5   
-    SPRITE_DOTS_FAST ;32t
-    inc hl;6    
+    SPRITE_DOTS_FAST
+    inc hl
     edup
 
-    ;+43
-    SPRITE_DOTS_FAST;32t
-    add hl,de;11
+    SPRITE_DOTS_FAST
+    add hl,de
 
+    dup 5   
+    SPRITE_DOTS_FAST
+    inc hl
+    edup
+
+    SPRITE_DOTS_FAST
+    add hl,de
 
 ;===============================================================    
-    ;extra delay till 1824
     ifndef PENTAGON    
     dup 1 : ld (0),bc : edup
     nop : nop : nop
     endif   
-
 ;==============================================================
 
 ;==============================================================
-;NEED 251t
     ;DELAY
     ifndef PENTAGON
     dup 1 : ld (0),bc : edup
@@ -72,58 +56,41 @@ reLine01:
     CALC_ANIMATION_AND_PATCH
 
     nop : nop;8t
-;    ld a,0;7t
-;    nop     ;4
     inc bc    ;6
- ;   ld a,r      ;9
     ld a,0;7t
 
-;    ld a,r : ld a,r;18t
-
-
-    ;229 - need 251       
-    ;ld iyh,4 ;11
-    ;need another 11    
     ld iyh,4 ;11
-;==============================================================
-;    exx : out (c),l : exx    ;20t
 ;==============================================================
 ;AFTER FLIP ANOTHER 1824t
 ;==============================================================
-;1517t    
 reLine02:
-    ;190
     dup 5
-    SPRITE_DOTS_FAST ;32t
-    inc hl;6
+    SPRITE_DOTS_FAST
+    inc hl
     edup
-    ;+43
-    SPRITE_DOTS_FAST;32t
-    add hl,de;11
-    ; 8            10
+
+    SPRITE_DOTS_FAST
+    add hl,de
+
     dec iyh : jp nz,reLine02
 
-    exx : out (c),l : exx    ;20t
+    exx : out (c),l : exx    
 
-    ;190
     dup 5
-    SPRITE_DOTS_FAST ;32t
-    inc hl;6
+    SPRITE_DOTS_FAST
+    inc hl
     edup
-    ;+43
-    SPRITE_DOTS_FAST;32t
+
+    SPRITE_DOTS_FAST
     add hl,de;11 save for top fix
-;    ld a,r : ld a,r
 
-    ;190
+
     dup 5
-    SPRITE_DOTS_FAST ;32t
-    inc hl;6
+    SPRITE_DOTS_FAST
+    inc hl
     edup
-    ;+43
-    SPRITE_DOTS_FAST;32t
-    ;add hl,de;11 save for top fix
-;    ld a,r : ld a,r
+
+    SPRITE_DOTS_FAST
 
     ld a,(ix+SPRITE.Y-SPRITE) : ld (ix+SPRITE.DRAWY-SPRITE),a
 

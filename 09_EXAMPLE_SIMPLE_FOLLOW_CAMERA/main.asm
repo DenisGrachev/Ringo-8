@@ -22,7 +22,7 @@
 ;PAGE 7 - FREE AFTER SCREEN2
 
 ;uncomment define for Pentagon timings	
-	;define PENTAGON
+;	define PENTAGON
 
     device ZXSPECTRUM128	
 

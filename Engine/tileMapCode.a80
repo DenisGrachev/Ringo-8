@@ -124,13 +124,11 @@ tileMapPointer:    ld hl,tileMap;10t
 ptmSP:  ld sp,00000
 
         
-;how break 128 tiles limit
-
+;how break 128 tiles limit?
 /*
         exx
         ld bc,tilesLUT
         exx
-
 
         ;85t        
         dup 9
@@ -148,54 +146,9 @@ ptmSP:  ld sp,00000
         dec hl
 */
 
-
-
-        /*87t
-         ld bc,tilesLUT
-        dup 9
-        ld e,(hl) : ld d,0 ;7 7 get tile
-        ex de,hl ;4 save map pointer
-        add hl,hl; 11 x2
-        add hl,bc; 11 add tiles gfx
-        ;   7            6         7         4       11
-        ld a,(hl) : inc hl : ld h,(hl) : ld l,a : push hl ; load and save
-        ;4
-        ex de,hl ;restore hl
-        ;6
-        dec hl ;next tile
-        edup
-
-        ld de,-tileMapWidth+8 : add hl,de;next line
-        */
-
-/*
-        ld bc,tilesLUT
-        dup 9
-        ld e,(hl) : ld d,0 ;7 7 get tile
-        ex de,hl ;4 save map pointer
-        add hl,hl; 11 x2
-        add hl,bc; 11 add tiles gfx
-        ;   7            6         7         4       11
-        ld a,(hl) : inc hl : ld h,(hl) : ld l,a : push hl ; load and save
-        ;4
-        ex de,hl ;restore hl
-        ;6
-        dec hl ;next tile
-        edup
-
-        ld de,-tileMapWidth+8 : add hl,de;next line
-*/
-
     ret
 
-;applyScroll:
-;        di
-;;        ld hl,(tileMapScroll) : ld (tileMapScroll_internal),hl
-;	call processTileMap
-;        ei
-;        ret
-
-;адреса графики тайлов, по сути таблица соответствия
+;lookup table for tiles gfx
         align 256
 tilesLUT:
 N=0

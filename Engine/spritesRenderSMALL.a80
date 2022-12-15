@@ -7,16 +7,15 @@ attrBufferCorrection2:    ld hl,00000
 ;calculate displacement from coords
     CALC_DISPLACEMENT_SMALL
 ;================================================
-    ;584
     dup 5
 
     dup 2
-    SPRITE_DOTS_FAST ;32t
-    inc hl;6    
+    SPRITE_DOTS_FAST
+    inc hl
     edup
-    ;+43
-    SPRITE_DOTS_FAST;32t
-    add hl,de;11
+
+    SPRITE_DOTS_FAST
+    add hl,de;
     edup
     org $-1
 
@@ -26,7 +25,6 @@ attrBufferCorrection2:    ld hl,00000
     ld hl,(attrBufferCorrection2+1)
 ;calculate displacement from coords
     CALC_DISPLACEMENT_SMALL
-;876t
 
     dup 2
     SPRITE_DOTS_FAST ;32t
@@ -37,7 +35,6 @@ attrBufferCorrection2:    ld hl,00000
     add hl,de;11    
     ld a,r;9t delay
 
-;1004!!!!!!!!!!!!!!!!
 
     exx : out (c),h : exx
 
@@ -67,7 +64,6 @@ attrBufferCorrection2:    ld hl,00000
     nop : nop
 ;==============================================================
 ;calculate displacement from coords
-    ;257 not 251 need 6 t remove up
     ld hl,(attrBufferCorrection2+1)
     CALC_DISPLACEMENT_SMALL
 
@@ -101,10 +97,6 @@ attrBufferCorrection2:    ld hl,00000
 
     ld a,r;9t delay
 
-
-
-;1004!!!!!!!!!!!!!!!!
-
     exx : out (c),l : exx
 
     dup 4
@@ -120,7 +112,7 @@ attrBufferCorrection2:    ld hl,00000
     ; 10t            15t
     ld bc,SPRITE : add ix,bc ; and b=0 is good  
 ;=================================
-;DELAY 54
+;DELAY
     ifdef PENTAGON
         if SPRITE_MODE<2
             nop : nop

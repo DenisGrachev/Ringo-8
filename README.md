@@ -4,7 +4,7 @@
 ## Quick Start
 
 Grab **sjasmplus v1.20.1** from **z00m128** https://github.com/z00m128/sjasmplus
-Download Ringo Engine sources, put **sjasmplus.exe** in the right sample folder and just compile **main.asm**
+Download Ringo Engine sources, put **sjasmplus.exe** in the right sample folder and compile **main.asm**
 
 ## Tiles
 
@@ -17,6 +17,12 @@ Default **Tilemap** size is **32x16**
 tilesLUT
 
 ## Sprites
+
+SPRITES LAYER
+
+X: 0-11 is hidden 12-75 shown 75.. hidden
+Y; 0-11 is hidden 12-49 shown 50-62 hidden
+
 
 **Eight** Big Sprites **11x12** and **Sixteen** Small Sprites **5x5**
 

@@ -175,8 +175,8 @@ initTiles:
     call fillPixels 	 ; fill pixel pattern
     ret
 
-//generate shifted tiles to 16384 (6144 exactly)
-//and then copy to tiles 1 page from 16384
+;generate shifted tiles to 16384 (6144 exactly)
+;and then copy to tiles 1 page from 16384
 generateShifted:    
     ld a,(tilesPage2_16): ld bc,$7ffd : out (c),a
     ld hl,tileSet : ld de,16384    

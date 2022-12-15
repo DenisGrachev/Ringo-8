@@ -1,11 +1,9 @@
 
+attrBufferWidth=32+6 ; 6 bytes to hide a sprite width
 
-
-attrBufferWidth=32+6 ; по 3 байта шире с каждой стороны, чтобы спарйты вылезали в бока ;)
-
-;аттрибутный буффер который будет кидаться в экран
+;attr buffer to drop on screens
 attrBuffer:
-;сверху 12 строк, на высоту спрайта
+;12 lines - max sprite height
         dup 12
                 block attrBufferWidth,0*8+0
         edup
@@ -15,12 +13,12 @@ attrBufferStart:
         block 32,0*8+0 : block 6,0*8+0
         edup
 
-;снизу 20 строк, максимальное смещение плюс высота спрайта
+;20 lines - 8 max shift+12ma sprite height
         dup 20
                 block attrBufferWidth,0*8+0
         edup 
 
-;рендер лист для тайлов	
+;render list for tiles render
 renderTilesList:
 N=0
 	dup 64
@@ -36,24 +34,25 @@ N=0
 ;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
 
 renderFrame1:
-;кидаем буфер на экраны
+	;pre settings
         ld a,0 : out (254),a
         exx
 	ld bc,#7ffd
         ld de,00000;some delay забыл убрать но ниже уже пофиксил луч ))       
-        ld hl,(16+7)+(24+7)*256; 7 пагу подрубим на кидалку в экраны
-        out (c),l; подрубим пока 7-ю пагу и первый экран
+        ld hl,(16+7)+(24+7)*256
+        out (c),l
 	exx
 
         ld (renderTiles1Exit+1),sp
 
+;copy attr buffer to screens
+
 ADDR1 = 16384+6144
 ADDR2 = 49152+6144
         
-;кидаем 16 строк из аттрибутного буфера в экран
 N=0
 attrPointer=$+2
-        ld ix,attrBufferStart+8;+2+attrBufferWidth*7;+3+attrBufferWidth*4
+        ld ix,attrBufferStart+8
         ;ld ix,0
         ld de,attrBufferWidth
 renderLine00:
@@ -218,11 +217,11 @@ renderLine47:
         ld sp,(renderTiles1Exit+1) : ld bc,228*3+80+40 : call DELAY        
         ld (renderTiles1Exit+1),sp
 
-;рисуем тайлы в буфер
+	;draw tiles to buffer
 
         ;here is some place for init
         ;dup 2 : ld (0),bc : edup      
-renderTilesPage:        ld de,(16+TILES_PAGE2)*256+(24+TILES_PAGE2) ;пагу с соответсвующими тайлами     
+renderTilesPage:        ld de,(16+TILES_PAGE2)*256+(24+TILES_PAGE2)
         ld bc,#7ffd        
         ;===============================
         ;exx : out (c),h : exx  
@@ -252,7 +251,6 @@ renderFrame2:
 
         exx
 	ld bc,#7ffd
-        ;пагу с соответсвующими тайлами
         ld de,(renderTilesPage+1)
         ld hl,16+24*256
         out (c),e; 
@@ -283,13 +281,13 @@ renderTiles2Exit:
 ;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=;=
 
 renderFrame1:
-;кидаем буфер на экраны
+
         ld a,0 : out (254),a
         exx
 	ld bc,#7ffd
         ld de,00000;some delay забыл убрать но ниже уже пофиксил луч ))       
-        ld hl,(16+7)+(24+7)*256; 7 пагу подрубим на кидалку в экраны
-        out (c),l; подрубим пока 7-ю пагу и первый экран
+        ld hl,(16+7)+(24+7)*256
+        out (c),l
 	exx
 
         ld (renderTiles1Exit+1),sp
@@ -297,10 +295,10 @@ renderFrame1:
 ADDR1 = 16384+6144
 ADDR2 = 49152+6144
         
-;кидаем 16 строк из аттрибутного буфера в экран
+;send buffer to screens
 N=0
 attrPointer=$+2
-        ld ix,attrBufferStart+8;+2+attrBufferWidth*7;+3+attrBufferWidth*4
+        ld ix,attrBufferStart+8
         ;ld ix,0
         ld de,attrBufferWidth
 renderLine00:
@@ -471,12 +469,11 @@ renderLine46:
 renderLine47:           
         TOADDR1 16        
 
-;рисуем тайлы в буфер
-
+;draw tiles to attr buffer
 
         ;here is some place for init
         dup 2 : ld (0),bc : edup      
-renderTilesPage:        ld de,(16+TILES_PAGE2)*256+(24+TILES_PAGE2) ;пагу с соответсвующими тайлами     
+renderTilesPage:        ld de,(16+TILES_PAGE2)*256+(24+TILES_PAGE2)
         ld bc,#7ffd        
         ;===============================
         ;exx : out (c),h : exx  

@@ -10,7 +10,7 @@ SPRITE_MODE = 2
 
 ;TileMap SIZE
 ;======================================================================
-tileMapWidth = 32	    ;MAX 256
-tileMapHeight = 16      ;MAX 128
+tileMapWidth = 32	 ;MAX 256
+tileMapHeight = 16	 ;MAX 128
 ;======================================================================
 
