@@ -1,0 +1,114 @@
+NOW 
+ ;86tx8 = 688 
+    dup num               
+        pop af ; 10t papper in a 
+        ld hl,ADDR ;10t    
+        or (hl)         ;7t 
+        ld (hl),a ;7t 
+        pop hl : ld (ADDR+0),hl ;26 
+        pop hl : ld (ADDR+2),hl ;26 
+ADDR = ADDR + attrBufferWidth         
+    edup 
+
+
+;столбики
+	
+	;264
+	dup 4
+	pop de;10
+	ld a,e;4
+	ld hl,addr;10
+	or (hl);7
+	ld (hl),a;7
+
+	ld a,d;4
+	ld hl,addr+nextline;10
+	or (hl);7
+	ld (hl),a;7
+	edup
+
+
+	;416
+	dup 8
+	pop hl : ld (addr),hl
+	pop hl : ld (addr),hl
+	edup
+
+	
+ 
+
+
+
+
+ ж=====================================================
+ pop de ;10t 
+ ld a,e ;4t 
+ 
+ потом вместо pop ld a,d 
+ 
+ 18 vs 20 тактов и нет лишних байтов? 
+ но по пизде вертикальные бесплатные анимы и вертикальный паралаксик
+ 
+ 
+ ;170t!!!! 
+ 
+    dup num/2 
+        pop de ; 10t papper in a 
+  
+	ld a,e ;4t 
+ 
+        ld hl,ADDR ;10t    
+        or (hl)         ;7t 
+        ld (hl),a ;7t 
+        pop hl : ld (ADDR+0),hl ;26 
+        pop hl : ld (ADDR+2),hl ;26 
+ADDR = ADDR + attrBufferWidth         
+ 
+ 
+ 	ld a,d ;4t 
+ 
+        ld hl,ADDR ;10t    
+
+        or (hl)         ;7t 
+        ld (hl),a ;7t 
+        pop hl : ld (ADDR+0),hl ;26 
+        pop hl : ld (ADDR+2),hl ;26 
+ ADDR = ADDR + attrBufferWidth         
+ 
+    edup
+
+ ж=====================================================
+
+
+запрещёнка байты идут потоком 5 байт на тайл
+2 линии
+
+186 тактов = 93т
+
+pop hl ;10
+ld (ADDR+1),hl ;16t    !!!!! мы кладём h сразу
+
+ld a,l ;4t
+ld hl,ADDR ;10t    
+or (hl)    ;7t
+ld (hl),a  ;7t
+
+pop hl ;10t
+ld (ADDR+2),hl;16t
+
+pop hl;10t
+ld (ADDR+4),hl;16t ;1 лишний положили в h
+
+ld a,h;4t
+
+ld hl,ADDR ;10t    
+or (hl)    ;7t
+ld (hl),a  ;7t
+
+pop hl : ld (addr+1),hl;26t
+pop hl : ld (addr+3),hl;26t
+
+
+
+
+

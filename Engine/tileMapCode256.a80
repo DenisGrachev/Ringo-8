@@ -1,7 +1,7 @@
 
 ;this one allow 256 tiles
 ;but in tiles pages room only for ~160tiles )
-;also LUT TABLE BECOME 512bytes with hugh and low byte and tiles animation will be harder a bit
+;also LUT TABLE BECOME 512bytes with high and low byte and tiles animation will be harder a bit
 ;also you need to fix a tile shifted function in sys.a80 
 ;anyway, feel free to test it )
 
