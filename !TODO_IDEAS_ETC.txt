@@ -1,14 +1,49 @@
 NOW 
  ;86tx8 = 688 
     dup num               
-        pop af ; 10t papper in a 
         ld hl,ADDR ;10t    
+        pop af ; 10t papper in a 
         or (hl)         ;7t 
         ld (hl),a ;7t 
         pop hl : ld (ADDR+0),hl ;26 
         pop hl : ld (ADDR+2),hl ;26 
 ADDR = ADDR + attrBufferWidth         
     edup 
+
+
+;===============================================
+;184t! for 2 lines
+
+	pop de;10
+	ld a,e;4
+	ld hl,addr;10
+	or (hl);7
+	ld (hl),a;7
+	inc hl;6 - can be replaced somewhere by inc l
+	ld (hl),d;7
+
+		
+	pop hl ;10t
+	ld (ADDR+2),hl;16
+
+	pop de	;10t
+	ld hl,addr+4 ;10t
+	ld (hl),e ;10t
+
+addr+
+
+	ld a,d;4
+	ld hl,addr;10
+	or (hl);7
+	ld (hl),a;7
+
+	pop hl ;10t
+	ld (ADDR+2),hl;16
+	pop hl ;10t
+	ld (ADDR+2),hl;16
+;=======================================================	
+	
+	
 
 
 ;столбики
