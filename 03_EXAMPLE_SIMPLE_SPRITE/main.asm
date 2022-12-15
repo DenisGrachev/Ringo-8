@@ -64,8 +64,8 @@ startGame:
 	;set sprite image for sprite00
 	ld hl,testSprite : ld (sprite00+SPRITE.IMAGE),hl
 	;set XY coords
-	ld a,16 : ld (sprite00+SPRITE.X),a
-	ld a,16 : ld (sprite00+SPRITE.Y),a
+	ld a,12 : ld (sprite00+SPRITE.X),a
+	ld a,12 : ld (sprite00+SPRITE.Y),a
 	;set animation max frame
 	ld a,ANIM_FRAMES_4 : ld (sprite00+SPRITE.MAX_FRAME),a
 	;set animation speed
@@ -83,6 +83,8 @@ mainLoop:
 ;PLACE YOUR CODE HERE ~12000t
 ;============================================================================	
 ;		
+	ld a,(sprite00_X) : inc a : and 63 : ld (sprite00_X),a
+	ld a,(sprite00_Y) : inc a : and 63 : ld (sprite00_Y),a
 ;
 ;== FRAME 2 =================================================================
 	halt : ld hl,renderFrame1 : ld (intProc+1),hl	

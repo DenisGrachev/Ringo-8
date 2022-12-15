@@ -4,7 +4,7 @@
 ## Quick Start
 
 Grab **sjasmplus v1.20.1** from **z00m128** https://github.com/z00m128/sjasmplus
-Download Ringo Engine sources, put **sjasmplus.exe** in the right sample folder and run **!compile.bat** or just compile **main.asm**
+Download Ringo Engine sources, put **sjasmplus.exe** in the right sample folder and just compile **main.asm**
 
 ## Tiles
 
