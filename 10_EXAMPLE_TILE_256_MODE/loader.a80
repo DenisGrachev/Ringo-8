@@ -1,0 +1,49 @@
+;VERY SIMPLE LOADER - SAVES ALL PAGES 
+;DETECT MACHINE TYPE AND LOAD ENGINE CODE TO FAST PAGES
+
+;loader at #be00 - place for IM vector table after game start
+	org	#BE00
+
+startLoader:
+    ld sp,24499
+    ;enable 48k rom - disable page 7 problems on +3DOS machine
+	RES 4,(IY+1)
+
+    ;UGLY DETECT BY ROM BYTE
+    ;On 128k models, PEEK 2899 is 159 on a 128 or +2, 126 on a +3 or +2a.
+    ld a,(2899)
+    cp 159
+    jr z,1f;ok 128k and grey +2; 4,6 fast	     
+   ;change pages
+    ld a,16+4 : ld (page1+1),a
+    ld a,16+1 : ld (page4+1),a
+    ld a,16+6 : ld (page3+1),a
+    ld a,16+3 : ld (page6+1),a
+1:    
+    ;load main code
+	ld a,16+0 : call loaderSwapPage    
+	ld ix,start : ld de,49152-512-start : ld a,255 : scf : call 1366
+        ld ix,49152 : ld de,16384 : ld a,255 : scf : call 1366
+    ;and pages
+page1:    ld a,16+1 : call loaderSwapPage 
+	ld ix,49152 : ld de,16384 : ld a,255 : scf : call 1366
+page3:    ld a,16+3 : call loaderSwapPage    
+	ld ix,49152 : ld de,16384 : ld a,255 : scf : call 1366
+page4:    ld a,16+4 : call loaderSwapPage    
+	ld ix,49152 : ld de,16384 : ld a,255 : scf : call 1366
+page6:    ld a,16+6 : call loaderSwapPage    
+	ld ix,49152 : ld de,16384 : ld a,255 : scf : call 1366
+page7:    ld a,16+7 : call loaderSwapPage    
+	ld ix,49152 : ld de,16384 : ld a,255 : scf : call 1366
+    ld a,16+0 : call loaderSwapPage 
+    ;start game
+    jp start
+loaderSwapPage:
+	ld bc, #7ffd : ld (23388),a : out (c),a : ret
+
+;	ret
+length	=	$-startLoader
+	
+    
+	MakeTape ZXSPECTRUM128, "main.tap", "loader", startLoader, length, startLoader
+

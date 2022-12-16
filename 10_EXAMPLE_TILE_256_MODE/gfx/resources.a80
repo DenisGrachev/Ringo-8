@@ -1,0 +1,33 @@
+	page 0
+	org 49152
+	include "../engine/_sprites.a80"		
+
+;PLACE SPRITES HERE OR AT MAIN MEMORY:
+testSprite:     incbin "gfx/sprite.png.bin"    
+
+;page with tiles	
+	page 6
+    org 49152
+	include "../engine/_tiles.a80"
+
+;128*48 = 6144 bytes not shifted tileset
+;PLACE TILESET HERE
+tileSet:
+         incbin "gfx/tileSet.png.bin",0,186*48
+tileSetEnd:		
+
+;FREE SPACE
+
+
+;page with SHIFTED tiles
+	page 4
+    org 49152
+	include "../engine/_TilesShifted.a80"
+
+;128*48 = 6144 bytes not shifted tileset
+;PLACE TILESET HERE
+_tileSet:
+         block 6144,0
+_tileSetEnd:	
+
+;FREE SPACE
