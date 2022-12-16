@@ -178,9 +178,21 @@ initTiles:
 ;generate shifted tiles to 16384 (6144 exactly)
 ;and then copy to tiles 1 page from 16384
 generateShifted:    
+	ld hl,tileSet :ld ixh,4 : call shiftTiles
+
+	;additional shift for more than 128 tiles mode
+	if TILE_MODE>128
+	ld hl,tileSet+6144 : ld ixh,2 : call shiftTiles ;enough to shift 64 tiles only, 32 per iteration
+	endif
+
+
+	ret
+shiftTiles:
     ld a,(tilesPage2_16): ld bc,$7ffd : out (c),a
-    ld hl,tileSet : ld de,16384    
-    ld ixh,4
+    push hl
+;    ld hl,tileSet : 
+    ld de,16384    
+;    ld ixh,4
 2:    
     ld ixl,0        
 1:     
@@ -199,7 +211,10 @@ generateShifted:
     dec ixl : jp nz,1b
     dec ixh : jp nz,2b
     ld a,(tilesPage1_16): ld bc,$7ffd : out (c),a
-    ld hl,16384 : ld de,tileSet : ld bc,6144 : ldir
+    ld hl,16384
+    pop de
+    ;ld de,tileSet
+    ld bc,6144 : ldir
     ld a,16+0 : ld bc,$7ffd : out (c),a
     ret
 

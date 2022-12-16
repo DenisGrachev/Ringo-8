@@ -15,7 +15,7 @@ Default **Tilemap** size is **32x16** and can be changed with **tileMapWidth** a
 
 **Tilemap** support up to **128** unique tiles. There is a special **Tiles Loookup Table** which contains information what **Tile** from **TileSet** to draw for **Tile**. It's useful for fast tiles animations. Check **SIMPLE_TILE_ANIMATION** sample for details.
 
-There is also support for 256 tile mode, but availabled memory only for 186. It's possible to reduce tile memory size but this breaks cheap vertical tiles animation and vertical parallax become a harder. Check **256_TILE** sample for details.
+There is also support for **256 Tiles Mode**, but availabled memory only for **186**. It's possible to reduce tile memory size but this breaks cheap vertical tiles animation and vertical parallax become a harder. Check **256_TILE** sample for details.
 
 **TileMap** can be scrolled in the **X** and **Y** direction by changing a variables **tileMapScroll_V** and **tileMapScroll_H**
 
