@@ -179,7 +179,7 @@ testTileMap:
 ;GENERATE SIMPLE TAP LOADER AT THE END
 ;============================================================================
 	page 0
-	include "loader.a80"
+	include "../engine/loader.a80"
 	IF (_ERRORS = 0)                                 		
 			SHELLEXEC "main.tap"	
 	ENDIF
