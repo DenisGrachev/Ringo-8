@@ -13,4 +13,4 @@ SPRITE_MODE = 2
 tileMapWidth = 32	 ;MAX 256
 tileMapHeight = 16	 ;MAX 128
 ;======================================================================
-
+TILE_MODE=128

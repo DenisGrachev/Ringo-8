@@ -9,9 +9,6 @@ testSprite:     incbin "gfx/sprite.png.bin"
 	page 6
     org 49152
 	include "../engine/_tiles.a80"
-
-	display "tilesPage: ",/d,$
-
 ;128*48 = 6144 bytes not shifted tileset
 ;PLACE TILESET HERE
 tileSet:

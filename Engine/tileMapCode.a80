@@ -103,11 +103,16 @@ tileMapPointer:    ld hl,tileMap;10t
         dup 7
 ;=========================================================================
         dup 9
-        ;7t             4       7                   7          4       7                   
-        ;ld a,(de) : ld l,a : ld h,high tilesLUT : ld c,(hl) : inc l : ld b,(hl)
-        ;ADD a,a can be romoved to speed up, but tilenum is X2 and same limit for 128tiles
+
+	if TILE_MODE=128
         ;   7           4       4              7               7         4         7
         ld a,(de) : add a,a : ld l,a : ld h,high tilesLUT : ld c,(hl) : inc l : ld b,(hl)
+	else
+        ;   7           4              7               7         4         7
+        ld a,(de) :  ld l,a : ld h,high tilesLUT : ld c,(hl) : inc h : ld b,(hl)
+	;4
+	add a,a ;delay - REMOVE IF NEED SOME
+	endif
 
         ;11t
         push bc
@@ -123,31 +128,10 @@ tileMapPointer:    ld hl,tileMap;10t
   
 ptmSP:  ld sp,00000
         
-;how break 128 tiles limit?
-/*
-        exx
-        ld bc,tilesLUT
-        exx
-
-        ;85t        
-        dup 9
-
-        ld a,(hl) ;7
-        exx   ;4      
-        ld l,a : ld h,0  ;4 7
-        add hl,hl ;11
-        add hl,bc ;11
-        ; 7             6         7         11
-        ld e,(hl) : inc hl : ld d,(hl) : push de
-        ;4
-        exx
-        ;6
-        dec hl
-*/
-
-    ret
+	ret
 
 ;lookup table for tiles gfx
+	if TILE_MODE=128
         align 256
 tilesLUT:
 N=0
@@ -155,6 +139,25 @@ N=0
         dw tileSet+N*48
 N=N+1        
         edup
+
+	else
+
+        align 256
+tilesLUT:
+N=0
+        dup 256
+        db low (tileSet+N*48)
+N=N+1        
+        edup
+        align 256
+tilesLUThigh:
+N=0
+        dup 256
+        db high (tileSet+N*48)
+N=N+1        
+        edup
+
+	endif
 
 
         include "_tileMap.a80"
