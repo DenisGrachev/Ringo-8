@@ -1,27 +1,4 @@
 
-;SPRITES DESCRIPTORS
-;
-ANIM_SPEED_0 = 0
-ANIM_SPEED_1 = 2
-ANIM_SPEED_2 = 4
-ANIM_SPEED_3 = 8
-ANIM_SPEED_4 = 16 ;every frame change sprite frame - MAX SPEED
-
-;maxframe*16-1
-ANIM_FRAMES_8 = 8*16-1
-ANIM_FRAMES_4 = 4*16-1
-ANIM_FRAMES_2 = 2*16-1
-
-    STRUCT SPRITE
-IMAGE           WORD 00000
-X               BYTE 0
-Y               BYTE 0
-DRAWX               BYTE 0
-DRAWY               BYTE 0
-FRAME           BYTE
-MAX_FRAME       BYTE ;4,8,16,32,64
-ANIM_SPEED      BYTE
-    ENDS
 
 ;BIG SPRITES
 sprite00:
