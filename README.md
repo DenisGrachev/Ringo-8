@@ -26,8 +26,20 @@ There is also support for **256 Tiles Mode**, but availabled memory only for **1
 Sprite Layer draws on top of tiles layer
 
 **Eight** Big Sprites **11x12** and **Sixteen** Small Sprites **5x5**
+Big sprites support auto animation, you need to specify a MAX_FRAME and ANIM_SPEED variables with predefined speeds and max frame constants. Check **SPRITE_ANIMATION** sample for details.
 
-animations
+There is a 3 sprite modes supported:
+
+**MODE 0** - all small sprites **ABOVE** big sprites
+**MODE 1** - all small sprites **BELOW** big sprites
+**MODE 2** - 8 small sprites **BELOW** big sprites and 8 small sprites **ABOVE** big sprites
+
+Sprites mode can be changed via **SPRITE_MODE** compiler variable
+
+Check **SPRITE_MODES** sample for details
+
+Use **SpritesConvertor** to convert from **Png** file to engine format
+
 
 ## Memory map
 
