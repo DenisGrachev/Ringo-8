@@ -10,6 +10,12 @@ Grab **sjasmplus** from **z00m128** https://github.com/z00m128/sjasmplus, downlo
 
 Screen resolution is **64x48** with **8** bright colors from **Speccy** palette. The display is composed of two layers: **TileMap Layer** and **Sprites Layer**
 
+## Render
+
+Ringo-8 Render works in two frames, so you have two bottom borders time (~12000tStates) for game logic. Check samples for details.
+
+You can imagine that your speccy is a fantasy console running at **25FPS** with Z80 limited with **~24000tStates** and **TileSpriteUnit**
+
 ## TileMap
 
 Default **Tilemap** size is **32x16** and can be changed with **tileMapWidth** and **tileMapHeight** compiler variables.
