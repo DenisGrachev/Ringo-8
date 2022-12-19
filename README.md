@@ -1,5 +1,6 @@
 # Ringo-8
-64x48 Graphics Library For **ZX Spectrum 128KB** based on my render engine from [Ringo](https://zxonline.net/game/ringo)
+
+**Ringo-8** is a **64x48** Graphics Library For **ZX Spectrum 128KB** based on my render engine from [Ringo](https://zxonline.net/game/ringo)
 
 ## Quick Start
 
@@ -46,23 +47,23 @@ Use **SpritesConvertor** to convert from **Png** file to engine format, any colo
 
 ## Memory map
 
-PAGE 0 - SPRITES + FREE - check gfx/resources.a80
+**PAGE 0** - SPRITES + FREE - check gfx/resources.a80
 
-PAGE 1 - FREE
+**PAGE 1** - FREE
 
-PAGE 2 - MAIN CODE + FREE (32768-48830)
+**PAGE 2** - MAIN CODE + FREE (32768-48830)
 
-PAGE 3 - FREE
+**PAGE 3** - FREE
 
-PAGE 4 - TILES CODE 1 + FREE - check gfx/resources.a80 for details
+**PAGE 4** - TILES CODE 1 + FREE - check gfx/resources.a80 for details
 
-PAGE 5 - MAIN CODE + FREE	- from 24500-32768
+**PAGE 5** - MAIN CODE + FREE	- from 24500-32768
 
-PAGE 6 - TILES CODE 2 + FREE - check gfx/resources.a80
+**PAGE 6** - TILES CODE 2 + FREE - check gfx/resources.a80
 
-PAGE 7 - FREE AFTER SCREEN2
+**PAGE 7** - FREE AFTER SCREEN2
 
-Please use swapPage function from engine core, check **PAGED_CODE** sample for details
+Please use **swapPage** function from engine core, check **PAGED_CODE** sample for details
 
 ## Credits
 
