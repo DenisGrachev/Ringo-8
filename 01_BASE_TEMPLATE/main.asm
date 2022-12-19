@@ -1,5 +1,5 @@
 ;-----------------------------------------------------------------------------------------;
-;	RINGO Engine
+;	RINGO-8
 ;-----------------------------------------------------------------------------------------
 ;	Engine Core - Denis Grachev (rook^retrosouls^sibkrew)
 ;	Render Optimizations - Mikhail Vostrikov(monster^sage)

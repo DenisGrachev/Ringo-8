@@ -1,5 +1,5 @@
 ;-----------------------------------------------------------------------------------------;
-;	RINGO Engine
+;	RINGO-8
 ;-----------------------------------------------------------------------------------------
 ;	Engine Core - Denis Grachev (rook^retrosouls^sibkrew)
 ;	Render Optimizations - Mikhail Vostrikov(monster^sage)
@@ -16,9 +16,9 @@
 ;PAGE 1 - FREE
 ;PAGE 2 - MAIN CODE + FREE (32768-48830)
 ;PAGE 3 - FREE
-;PAGE 4 - TILES CODE 1 + FREE - check gfx/resources.a80 for details
+;PAGE 4 - TILES CODE 1 all page with tiles
 ;PAGE 5 - MAIN CODE + FREE	- from 24500-32768
-;PAGE 6 - TILES CODE 2 + FREE - check gfx/resources.a80
+;PAGE 6 - TILES CODE 2 all page with tiles
 ;PAGE 7 - FREE AFTER SCREEN2
 
 ;uncomment define for Pentagon timings	

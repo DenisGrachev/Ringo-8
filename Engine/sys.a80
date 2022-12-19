@@ -11,7 +11,7 @@ TILES_PAGE1_3 = 1
 TILES_PAGE2_3 = 3
 
 
-//interrupt code
+;interrupt code
 
 ;================interrupt enable===================
 IMON:       
