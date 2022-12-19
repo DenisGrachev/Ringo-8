@@ -4,7 +4,7 @@
 
 ## Quick Start
 
-Grab **sjasmplus** from **z00m128** https://github.com/z00m128/sjasmplus, download Ringo-8 sources, put **sjasmplus.exe** in the right sample folder and compile **main.asm**
+Grab **sjasmplus** from **z00m128** https://github.com/z00m128/sjasmplus, download **Ringo-8** sources, put **sjasmplus.exe** in the right sample folder and compile **main.asm**
 
 ## Screen
 
@@ -12,7 +12,7 @@ Screen resolution is **64x48** with **8** bright colors from **Speccy** palette.
 
 ## Render
 
-Ringo-8 Render works in two frames, so you have two bottom borders time (~12000tStates) for game logic. Check samples for details.
+**Ringo-8** Render works in two frames, so you have two bottom borders time (~12000tStates) for game logic. Check samples for details.
 
 You can imagine that your speccy is a fantasy console running at **25FPS** with Z80 limited with **~24000tStates** and **TileSpriteUnit**
 
