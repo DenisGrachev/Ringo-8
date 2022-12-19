@@ -14,7 +14,7 @@ Screen resolution is **64x48** with **8** bright colors from **Speccy** palette.
 
 **Ringo-8** Render works in two frames, so you have two bottom borders time (**~12000 tStates**) for game logic. Check samples for details.
 
-You can imagine that your speccy is a fantasy console running at **25FPS** with **Z80** limited to **~24000 tStates** and **TileSpriteUnit**
+You can imagine that your speccy is a fantasy console running at **25FPS** with **Z80** limited to **~24000 tStates** and have **TileSpriteUnit**
 
 ## TileMap
 
