@@ -1,9 +1,9 @@
-# Ringo Engine
+# Ringo-8
 64x48 Graphics Library For **ZX Spectrum 128KB** based on my render engine from [Ringo](https://zxonline.net/game/ringo)
 
 ## Quick Start
 
-Grab **sjasmplus** from **z00m128** https://github.com/z00m128/sjasmplus, download Ringo Engine sources, put **sjasmplus.exe** in the right sample folder and compile **main.asm**
+Grab **sjasmplus** from **z00m128** https://github.com/z00m128/sjasmplus, download Ringo-8 sources, put **sjasmplus.exe** in the right sample folder and compile **main.asm**
 
 ## Screen
 
