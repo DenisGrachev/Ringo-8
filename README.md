@@ -26,12 +26,15 @@ There is also support for **256 Tiles Mode**, but availabled memory only for **1
 Sprite Layer draws on top of tiles layer
 
 **Eight** Big Sprites **11x12** and **Sixteen** Small Sprites **5x5**
+
 Big sprites support auto animation, you need to specify a MAX_FRAME and ANIM_SPEED variables with predefined speeds and max frame constants. Check **SPRITE_ANIMATION** sample for details.
 
 There is a 3 sprite modes supported:
 
 **MODE 0** - all small sprites **ABOVE** big sprites
+
 **MODE 1** - all small sprites **BELOW** big sprites
+
 **MODE 2** - 8 small sprites **BELOW** big sprites and 8 small sprites **ABOVE** big sprites
 
 Sprites mode can be changed via **SPRITE_MODE** compiler variable
@@ -42,8 +45,6 @@ Use **SpritesConvertor** to convert from **Png** file to engine format
 
 
 ## Memory map
-
-Write About virtual paging
 
 PAGE 0 - SPRITES + FREE - check gfx/resources.a80
 
@@ -61,9 +62,7 @@ PAGE 6 - TILES CODE 2 + FREE - check gfx/resources.a80
 
 PAGE 7 - FREE AFTER SCREEN2
 
-## Advanced Users
-
-Half of import ifx2 coord etc
+Please use swapPage function from engine core, check **PAGED_CODE** sample for details
 
 ## Credits
 
