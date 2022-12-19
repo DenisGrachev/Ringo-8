@@ -15,11 +15,11 @@ Default **Tilemap** size is **32x16** and can be changed with **tileMapWidth** a
 
 **Tilemap** support up to **128** unique tiles. There is a special **Tiles Loookup Table** which contains information what **Tile** from **TileSet** to draw for **Tile**. It's useful for fast tiles animations. Check **SIMPLE_TILE_ANIMATION** sample for details.
 
-There is also support for **256 Tiles Mode**, but availabled memory only for **186**. It's possible to reduce tile memory size but this breaks cheap vertical tiles animation and vertical parallax become a harder. Check **256_TILE** sample for details.
+There is also support for **256 Tiles Mode**, but availabled memory only for **186**. It's possible to reduce tile memory size but this breaks cheap vertical tiles animation and vertical parallax become a harder. Check **TILE_256_MODE** sample for details.
 
 **TileMap** can be scrolled in the **X** and **Y** direction by changing a variables **tileMapScroll_V** and **tileMapScroll_H**
 
-**TileSet** stores a image with **Tiles**, use **TilesConvertor** to convert from **Png** file to engine format
+**TileSet** stores a image with **Tiles**, use **TilesConvertor** to convert from **Png** file to engine format.
 
 ## Sprites
 
@@ -27,7 +27,7 @@ Sprite Layer draws on top of tiles layer
 
 **Eight** Big Sprites **11x12** and **Sixteen** Small Sprites **5x5**
 
-Big sprites support auto animation, you need to specify a MAX_FRAME and ANIM_SPEED variables with predefined speeds and max frame constants. Check **SPRITE_ANIMATION** sample for details.
+Big sprites support auto animation, you need to specify a **MAX_FRAME** and **ANIM_SPEED** variables with predefined speeds and max frame constants. Check **SPRITE_ANIMATION** sample for details.
 
 There is a 3 sprite modes supported:
 
@@ -41,7 +41,7 @@ Sprites mode can be changed via **SPRITE_MODE** compiler variable
 
 Check **SPRITE_MODES** sample for details
 
-Use **SpritesConvertor** to convert from **Png** file to engine format
+Use **SpritesConvertor** to convert from **Png** file to engine format, any color that don't match a speccy bright palette will be a transparent.
 
 
 ## Memory map
